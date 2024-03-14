@@ -1,16 +1,19 @@
-package page;
+package practice.automation.page;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import practice.automation.model.User;
 
 import java.time.Duration;
 
 public class LogInPage {
     private static final String LOGINPAGE_URL = "https://dev.cvb.codeprime.dev/cv/";
-    private WebDriver driver;
+    private final WebDriver driver;
 
     @FindBy(xpath = "//*[@id='app']/div/form/div[1]/input")
     private WebElement eMail;
@@ -27,19 +30,19 @@ public class LogInPage {
     }
 
     public LogInPage openPage() {
-        driver.get(LOGINPAGE_URL);
+        driver.navigate().to(LOGINPAGE_URL);
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.elementToBeClickable(loginButton));
         return this;
     }
 
-    public GeneralInfo loginValidUser(String mail, String password) {
-        eMail.sendKeys(mail);
-        this.password.sendKeys(password);
+    public MainPage loginValidUser(User user) {
+        eMail.sendKeys(user.getEMail());
+        this.password.sendKeys(user.getPassword());
         loginButton.click();
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//*[@id='general-info']")));
-        return new GeneralInfo(driver);
+        return new MainPage(driver);
     }
 
 }
