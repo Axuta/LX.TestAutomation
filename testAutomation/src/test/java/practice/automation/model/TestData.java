@@ -43,8 +43,55 @@ public class TestData {
         this.tools = tools;
     }
 
-
     public TestData(List<String> educations) {
 
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public List<String> getSkillSet() {
+        return skillSet;
+    }
+
+    public String getSkillToDelete() {
+        return skillToDelete;
+    }
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public List<String> getDate() {
+        return date;
+    }
+
+    public String getProjectDescription() {
+        return projectDescription;
+    }
+
+    public List<String> getResponsibilities() {
+        return responsibilities;
+    }
+
+    public String getTools() {
+        return tools;
     }
 }

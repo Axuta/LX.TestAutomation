@@ -46,10 +46,10 @@ public class GeneralInfoSection extends MainPage {
     public List<String> fillInGeneralInfo(TestData testData) {
 
         clearInputField(firstName);
-        firstName.sendKeys(testData.getName());
+        firstName.sendKeys(testData.getFirstName());
 
         clearInputField(lastName);
-        lastName.sendKeys(testData.getSurname());
+        lastName.sendKeys(testData.getLastName());
 
         clearInputField(jobTitle);
         jobTitle.sendKeys(testData.getJobTitle());

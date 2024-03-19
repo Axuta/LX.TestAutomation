@@ -1,22 +1,15 @@
 package practice.automation.page;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class OverviewSection extends MainPage {
 
     protected WebDriver driver;
-
-    private int skillNumber;
-    private String skillInputLocator = "//*[@id='overview']/div[2]/div[" + skillNumber + "]/div/div[2]/div/input";
-    private String skillDeleteButtonLocator = "//*[@id='overview']/div[2]/div[" + skillNumber + "]/div/button";
 
     @FindBy(xpath = "//section[@id='overview']/div[1]/div/textarea")
     private WebElement overviewTextArea;
@@ -27,9 +20,11 @@ public class OverviewSection extends MainPage {
     @FindBy(xpath = "//section[@id='overview']/header[2]/button")
     private WebElement addSkillButton;
 
-    private By skillsBy = By.xpath(skillInputLocator);
-    private By deleteSkillButtonBy = By.xpath(skillDeleteButtonLocator);
+    @FindBy(xpath = "//input[contains(@placeholder, 'skill')]")
     private List<WebElement> skills;
+
+    @FindBy(xpath = "//*[@id='overview']/div[2]//button")
+    private List<WebElement> deleteSkillButton;
 
     public OverviewSection(WebDriver driver) {
         super(driver);
@@ -41,65 +36,47 @@ public class OverviewSection extends MainPage {
         return overviewTextArea.getAttribute("value");
     }
 
-    public String getSkill(int skillNumber) {
-        return skills.get(skillNumber-1).
-                getAttribute("value");
-    }
-
-    public WebElement deleteSkillButton(int skillNumber) {
-        return driver.findElement(deleteSkillButtonBy);
-    }
-
-    public String fillInOverviewMainTextArea(String withText) {
+    public void fillInOverviewMainTextArea(String withText) {
         clearInputField(overviewTextArea);
         overviewTextArea.sendKeys(withText);
 
-        return getOverviewTextArea();
+        getOverviewTextArea();
     }
 
-    public String beautifyOverviewMainTextArea(String withText) {
+    public String beautifyOverviewMainTextArea() {
         beautifyButton.click();
 
         return getOverviewTextArea();
     }
 
-    public List<WebElement> fillInSkills(String listOfSkills) {
-        List<String> skillSet = new ArrayList<>(Arrays.asList(listOfSkills.split(",")));
-        List<WebElement> updatedSkills = new ArrayList<>();
+    public void fillInSkills(List<String> skillSet) {
+        for (String skill : skillSet) {
+            WebElement lastSkillField = skills.getLast();
+            lastSkillField.sendKeys(skill);
 
-        int i = 0;
-        int numberOfSkills = skillSet.size()-1;
-
-        while (i <= numberOfSkills) {
-            clearInputField(updatedSkills.get(i));
-            updatedSkills.get(i).
-                    sendKeys(skillSet.get(i));
             addSkillButton.click();
-            i++;
         }
-
-        return updatedSkills;
     }
 
-    public List<WebElement> deleteSkill(List<WebElement> skills , String keys) {
-        List<WebElement> redactedSkills = new ArrayList<>();
-
-        int i = 1;
-        for (WebElement skill : skills) {
-            String skillText = skill.getAttribute("value");
-            if (skillText.contains(keys)) {
-
-                deleteSkillButton(i).click();
-            } else {
-                redactedSkills.add(skill);
+    public void deleteSkill(String keys) {
+        int i = 0;
+        do {
+            WebElement skillField = skills.get(i);
+            if (skillField
+                    .getAttribute("value")
+                    .contains(keys)) {
+                deleteSkillButton.get(i).click();
             }
             i++;
+        } while (i < skills.size());
+
+    }
+
+    public String getSkill(int skillNumber) {
+        if (skillNumber >= 0 && skillNumber < skills.size()) {
+            return skills.get(skillNumber).getAttribute("value");
+        } else {
+            throw new IllegalArgumentException("Invalid skill number");
         }
-        return redactedSkills;
     }
-
-    public int getSkillNumber() {
-        return skillNumber;
-    }
-
 }

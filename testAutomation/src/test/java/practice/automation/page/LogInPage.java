@@ -31,7 +31,7 @@ public class LogInPage {
 
     public LogInPage openPage() {
         driver.navigate().to(LOGINPAGE_URL);
-        new WebDriverWait(driver, Duration.ofSeconds(10))
+        new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.elementToBeClickable(loginButton));
         return this;
     }
@@ -40,7 +40,7 @@ public class LogInPage {
         eMail.sendKeys(user.getEMail());
         this.password.sendKeys(user.getPassword());
         loginButton.click();
-        new WebDriverWait(driver, Duration.ofSeconds(10))
+        new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//*[@id='general-info']")));
         return new MainPage(driver);
     }

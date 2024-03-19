@@ -15,11 +15,10 @@ public class GeneralInfoTest extends CommonConditions {
 
     TestData testData;
     List<String> expectedResults;
-    //*[@id="general-info"]/header/div[1]/p
+
     @BeforeClass(alwaysRun = true)
     public void setUp() {
         User testUser = UserCreator.withCredentialsFromProperty();
-        String section;
         testData = TestDataCreator.forGeneralInfo();
 
         expectedResults = new LogInPage(driver)
@@ -32,7 +31,7 @@ public class GeneralInfoTest extends CommonConditions {
     @Test
     public void firstNameIsRightName() {
         String expectedFirstName = expectedResults.get(0);
-        String testedFirstName = testData.getName();
+        String testedFirstName = testData.getFirstName();
 
         Assert.assertEquals(expectedFirstName, testedFirstName, "General info contains wrong name.");
     }
@@ -40,7 +39,7 @@ public class GeneralInfoTest extends CommonConditions {
     @Test
     public void lastNameIsRightSurname() {
         String expectedLastName = expectedResults.get(1);
-        String testedLastName = testData.getSurname();
+        String testedLastName = testData.getLastName();
 
         Assert.assertEquals(expectedLastName, testedLastName, "General info contains wrong surname.");
     }

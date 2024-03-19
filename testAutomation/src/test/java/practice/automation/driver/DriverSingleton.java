@@ -20,14 +20,17 @@ public class DriverSingleton {
                 case "firefox": {
                     WebDriverManager.firefoxdriver().setup();
                     driver = new FirefoxDriver();
+                    break;
                 }
                 case "edge": {
                     WebDriverManager.edgedriver().setup();
                     driver = new EdgeDriver();
+                    break;
                 }
                 case "safari": {
                     WebDriverManager.safaridriver().setup();
                     driver = new SafariDriver();
+                    break;
                 }
                 default: {
                     WebDriverManager.chromedriver().setup();
@@ -40,7 +43,9 @@ public class DriverSingleton {
     }
 
     public static void closeDriver() {
-        driver.quit();
-        driver = null;
+        if (driver != null) {
+            driver.quit();
+            driver = null;
+        }
     }
 }
