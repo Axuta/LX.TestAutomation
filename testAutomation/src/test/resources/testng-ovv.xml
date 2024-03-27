@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Ovview" verbose="1" >
+<test name="Ovview">
+    <classes>
+        <class name="practice.automation.test.OverviewTest"/>
+    </classes>
+</test>
+</suite>

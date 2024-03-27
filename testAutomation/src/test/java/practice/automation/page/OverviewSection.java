@@ -20,7 +20,7 @@ public class OverviewSection extends MainPage {
     @FindBy(xpath = "//section[@id='overview']/header[2]/button")
     private WebElement addSkillButton;
 
-    @FindBy(xpath = "//input[contains(@placeholder, 'skill')]")
+    @FindBy(xpath = "//input[contains(@placeholder, 'Skill')]")
     private List<WebElement> skills;
 
     @FindBy(xpath = "//*[@id='overview']/div[2]//button")

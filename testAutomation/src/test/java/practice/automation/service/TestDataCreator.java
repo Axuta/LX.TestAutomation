@@ -27,6 +27,8 @@ public class TestDataCreator {
     public static TestData forGeneralInfo() {
         Map<String, List<String>> dataMap = map("general-info");
 
+        System.out.println(dataMap);
+
         dataMap.get("name");
         String firstName = dataMap.get("name").get(0);
         String lastName = dataMap.get("name").get(1);

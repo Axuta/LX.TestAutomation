@@ -18,10 +18,8 @@ public class GeneralInfoSection extends MainPage {
 
     @FindBy(xpath = "//section[@id='general-info']/div/div[1]/div[1]/div/input")
     private WebElement firstName;
-
     @FindBy(xpath = "//section[@id='general-info']/div/div[1]/div[2]/div/input")
     private WebElement lastName;
-
     @FindBy(xpath = "//section[@id='general-info']/div/div[2]/div/div/input")
     private WebElement jobTitle;
 
@@ -56,7 +54,7 @@ public class GeneralInfoSection extends MainPage {
 
         new WebDriverWait(driver, Duration.ofSeconds(15))
                 .until(ExpectedConditions
-                        .attributeToBe(jobTitle, "value", ""));
+                        .attributeToBe(jobTitle, "value", "Test Sample"));
 
         ArrayList<String> initialFields = new ArrayList<>();
         initialFields.add(getFirstName());
