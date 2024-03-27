@@ -1,10 +1,14 @@
 package practice.automation.page;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public class OverviewSection extends MainPage {
@@ -32,21 +36,20 @@ public class OverviewSection extends MainPage {
         PageFactory.initElements(driver, this);
     }
 
-    public String getOverviewTextArea() {
+    public String getOverviewText() {
         return overviewTextArea.getAttribute("value");
     }
 
     public void fillInOverviewMainTextArea(String withText) {
         clearInputField(overviewTextArea);
         overviewTextArea.sendKeys(withText);
-
-        getOverviewTextArea();
     }
 
     public String beautifyOverviewMainTextArea() {
         beautifyButton.click();
+        new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='overview']/div[1]/header/button[2]")));
 
-        return getOverviewTextArea();
+        return getOverviewText();
     }
 
     public void fillInSkills(List<String> skillSet) {
@@ -56,20 +59,34 @@ public class OverviewSection extends MainPage {
 
             addSkillButton.click();
         }
+
+        new WebDriverWait(driver, Duration.ofSeconds(30))
+                .until(ExpectedConditions
+                        .numberOfElementsToBeMoreThan(By.xpath("//*[@id='overview']/div[2]//input"),
+                                skillSet.size() - 1));
+
+        for (int i = 0; i < skills.size(); i++) {
+            if (skills.get(i)
+                    .getAttribute("value")
+                    .isEmpty()) {
+                deleteSkillButton.get(i).click();
+            }
+        }
     }
 
     public void deleteSkill(String keys) {
-        int i = 0;
-        do {
+        for (int i = 0; i < skills.size(); i++) {
             WebElement skillField = skills.get(i);
-            if (skillField
-                    .getAttribute("value")
-                    .contains(keys)) {
+            if (skillField.getAttribute("value").contains(keys)) {
                 deleteSkillButton.get(i).click();
             }
-            i++;
-        } while (i < skills.size());
 
+            new WebDriverWait(driver, Duration.ofSeconds(30))
+                    .until(ExpectedConditions
+                            .invisibilityOfElementWithText(By
+                                            .xpath("//*[@id='overview']/div[2]//input"),
+                                    keys));
+        }
     }
 
     public String getSkill(int skillNumber) {
@@ -78,5 +95,14 @@ public class OverviewSection extends MainPage {
         } else {
             throw new IllegalArgumentException("Invalid skill number");
         }
+    }
+
+    public boolean isSkillPresent(String keys) {
+        for (WebElement skillField : skills) {
+            if (skillField.getAttribute("value").equals(keys)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

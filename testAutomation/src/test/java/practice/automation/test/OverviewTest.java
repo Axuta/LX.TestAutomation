@@ -1,5 +1,10 @@
 package practice.automation.test;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -10,16 +15,16 @@ import practice.automation.page.OverviewSection;
 import practice.automation.service.TestDataCreator;
 import practice.automation.service.UserCreator;
 
+import java.time.Duration;
 import java.util.List;
 
 public class OverviewTest extends CommonConditions {
 
     TestData testData;
     private OverviewSection overviewFields;
-    private List<String> testedSkillSet;
 
     @BeforeClass(alwaysRun = true)
-    public void setUp() {
+    public void setUpMethod() {
         User testUser = UserCreator.withCredentialsFromProperty();
         testData = TestDataCreator.forOverview();
 
@@ -29,23 +34,23 @@ public class OverviewTest extends CommonConditions {
                 .manageOverview();
     }
 
-    @Test
+    @Test(priority = 1)
     public void testFillInOverviewMainTextArea() {
         String testedOverviewText = testData.getOverview();
         overviewFields
                 .fillInOverviewMainTextArea(testedOverviewText);
 
         String expectedOverviewText = overviewFields
-                .getOverviewTextArea();
+                .getOverviewText();
 
         Assert.assertEquals(expectedOverviewText, testedOverviewText,
                 "Overview contains wrong text.");
     }
 
-    @Test
+    @Test(priority = 2)
     void testBeautifyOverviewButton() {
         String notBeautifiedOverview = overviewFields
-                .getOverviewTextArea();
+                .getOverviewText();
         String beautifiedOverview = overviewFields
                 .beautifyOverviewMainTextArea();
 
@@ -53,27 +58,32 @@ public class OverviewTest extends CommonConditions {
                 "Overview was not beautified.");
     }
 
-    @Test
+    @Test(priority = 3)
     public void testFillInSkills() {
-        testedSkillSet = testData.getSkillSet();
+        List<String> testedSkillSet = testData.getSkillSet();
         overviewFields
                 .fillInSkills(testedSkillSet);
 
         String expectedSkillNo2 = overviewFields.getSkill(2);
 
+        Wait<WebDriver> wait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(30))
+                .pollingEvery(Duration.ofSeconds(3))
+                .ignoring(Exception.class);
+        wait.until(ExpectedConditions
+                .numberOfElementsToBe(By.xpath("//*[@id='overview']/div[2]//input"),
+                        testedSkillSet.size()));
+
         Assert.assertEquals(testedSkillSet.get(2), expectedSkillNo2,
                 "Overview contains wrong skill set");
     }
 
-    @Test
+    @Test(priority = 4)
     public void testDeleteSkill() {
         String keys = testData.getSkillToDelete();
         overviewFields
                 .deleteSkill(keys);
 
-        String expectedSkillNo2 = overviewFields.getSkill(2);
-
-
-        Assert.assertNotEquals(testedSkillSet.get(2), expectedSkillNo2, "Required skill was not removed.");
+        Assert.assertFalse(overviewFields.isSkillPresent(keys), "Required skill was not removed.");
     }
 }

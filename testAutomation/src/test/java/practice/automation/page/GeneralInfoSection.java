@@ -1,11 +1,12 @@
 package practice.automation.page;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.FluentWait;
 import practice.automation.model.TestData;
 
 import java.time.Duration;
@@ -52,9 +53,12 @@ public class GeneralInfoSection extends MainPage {
         clearInputField(jobTitle);
         jobTitle.sendKeys(testData.getJobTitle());
 
-        new WebDriverWait(driver, Duration.ofSeconds(15))
+        new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(30))
+                .pollingEvery(Duration.ofSeconds(3))
+                .ignoring(Exception.class)
                 .until(ExpectedConditions
-                        .attributeToBe(jobTitle, "value", "Test Sample"));
+                        .attributeToBeNotEmpty(jobTitle,"value"));
 
         ArrayList<String> initialFields = new ArrayList<>();
         initialFields.add(getFirstName());
