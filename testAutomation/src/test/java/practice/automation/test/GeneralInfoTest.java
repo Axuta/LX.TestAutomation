@@ -16,8 +16,8 @@ public class GeneralInfoTest extends CommonConditions {
     TestData testData;
     List<String> expectedResults;
 
-    @BeforeClass
-    public void setUpMethod() {
+    @BeforeClass(alwaysRun = true)
+    public void testsSetUp() {
         User testUser = UserCreator.withCredentialsFromProperty();
         testData = TestDataCreator.forGeneralInfo();
 

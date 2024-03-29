@@ -24,7 +24,7 @@ public class OverviewTest extends CommonConditions {
     private OverviewSection overviewFields;
 
     @BeforeClass(alwaysRun = true)
-    public void setUpMethod() {
+    public void testsSetUp() {
         User testUser = UserCreator.withCredentialsFromProperty();
         testData = TestDataCreator.forOverview();
 

@@ -7,9 +7,9 @@ public class TestDataReader {
             System.getProperty("environment"));
 
     public static Map<String, List<String>> readData(String section) {
+        Map<String, List<String>> result = new LinkedHashMap<>();
         String keySection = "testdata." + section + ".";
 
-        Map<String, List<String>> result = new HashMap<>();
         for (String key : resourceBundle.keySet()) {
             if (key.startsWith(keySection)) {
                 String keyField = key.substring((keySection).length());

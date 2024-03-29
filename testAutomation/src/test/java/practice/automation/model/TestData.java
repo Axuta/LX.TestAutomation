@@ -7,16 +7,22 @@ public class TestData {
     private String firstName;
     private String lastName;
     private String jobTitle;
+
+    private String overview;
+    private List<String> skillSet;
+    private String skillToDelete;
     private String customer;
     private String role;
     private List<String> date;
     private String projectDescription;
     private List<String> responsibilities;
     private String tools;
-    private String overview;
-    private List<String> skillSet;
-    private String skillToDelete;
+    private List<String> educations;
     private Map<String, List<String>> dataMap;
+    private String educationToDelete;
+    private Map<String, List<String>> languageSkills;
+
+    private String languageToDelete;
 
     public TestData(Map<String, List<String>> dataMap) {
         this.dataMap = dataMap;
@@ -43,8 +49,14 @@ public class TestData {
         this.tools = tools;
     }
 
-    public TestData(List<String> educations) {
+    public TestData(List<String> educations, String educationToDelete) {
+        this.educations = educations;
+        this.educationToDelete = educationToDelete;
+    }
 
+    public TestData(Map<String, List<String>> languageSkillsMap, String languageToDelete) {
+        this.languageSkills = languageSkillsMap;
+        this.languageToDelete = languageToDelete;
     }
 
     public String getFirstName() {
@@ -93,5 +105,21 @@ public class TestData {
 
     public String getTools() {
         return tools;
+    }
+
+    public List<String> getEducations() {
+        return educations;
+    }
+
+    public String getEducationToDelete() {
+        return educationToDelete;
+    }
+
+    public Map<String, List<String>> getLangSkills() {
+        return languageSkills;
+    }
+
+    public String getLanguageToDelete() {
+        return languageToDelete;
     }
 }

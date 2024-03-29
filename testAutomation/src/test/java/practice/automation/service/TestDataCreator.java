@@ -2,13 +2,9 @@ package practice.automation.service;
 
 import practice.automation.model.TestData;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TestDataCreator {
-    private Map<String, List<String>> dataMap;
 
     public static Map<String, List<String>> map(String sectionName) {
         return switch (sectionName) {
@@ -38,35 +34,42 @@ public class TestDataCreator {
     }
 
     public static TestData forOverview() {
-        Map<String, List<String>> dataMap = TestDataReader.readData("overview");
+        Map<String, List<String>> dataMap = map("overview");
 
-        String overview = dataMap.get("overview").get(0);
+        String overview = dataMap.get("overview").getFirst();
         List<String> skillSet = new ArrayList<>(Arrays.asList(dataMap.get("skill").get(0).split(";;")));
         String skillToDelete = dataMap.get("skill").get(1);
 
         return new TestData(overview, skillSet, skillToDelete);
     }
 
-    public static TestData forProfessionalExperience() {
-        Map<String, List<String>> dataMap = TestDataReader.readData("experience");
-
-        String customer = "";
-        String role = "";
-        List<String> date = new ArrayList<>();
-        String projectDescription = "";
-        List<String> responsibilities = new ArrayList<>();
-        String tools = "";
-
-        return new TestData(customer, role, date, projectDescription, responsibilities, tools);
-    }
+//    public static TestData forProfessionalExperience() {
+//        Map<String, List<String>> dataMap = map("experience");
+//
+//        String customer = "";
+//        String role = "";
+//        List<String> date = new ArrayList<>();
+//        String projectDescription = "";
+//        List<String> responsibilities = new ArrayList<>();
+//        String tools = "";
+//
+//        return new TestData(customer, role, date, projectDescription, responsibilities, tools);
+//    }
 
     public static TestData forEducation() {
-        Map<String, List<String>> dataMap = TestDataReader.readData("education");
-        List<String> educations = dataMap.get("1");
-        return new TestData(educations);
+        Map<String, List<String>> dataMap = map("education");
+
+        List<String> educationsList = new ArrayList<>(Arrays.asList(dataMap.get("education").get(0).split(";;")));
+        String educationToDelete = dataMap.get("education").get(1);
+
+        return new TestData(educationsList, educationToDelete);
     }
 
+    public static TestData forLanguageSkills() {
+        Map<String, List<String>> dataMap = map("language-skills");
+        String languageToDelete = dataMap.get("language").getFirst();
 
-
-
+        dataMap.remove("language");
+        return new TestData(dataMap, languageToDelete);
+    }
 }
