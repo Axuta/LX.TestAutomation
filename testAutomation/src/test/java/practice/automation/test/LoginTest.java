@@ -6,6 +6,7 @@ import practice.automation.model.User;
 import practice.automation.page.LogInPage;
 import practice.automation.service.UserCreator;
 
+@Test(groups = "smoke test")
 public class LoginTest extends CommonConditions {
     @Test
     public void authorizationIsWorking() {
@@ -21,5 +22,4 @@ public class LoginTest extends CommonConditions {
                 "Test",
                 "Authorization is not working.");
     }
-
 }

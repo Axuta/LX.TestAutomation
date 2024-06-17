@@ -23,6 +23,8 @@ public class TestData {
     private Map<String, List<String>> languageSkills;
 
     private String languageToDelete;
+    private List<String> trainings;
+    private String trainingToDelete;
 
     public TestData(Map<String, List<String>> dataMap) {
         this.dataMap = dataMap;
@@ -115,11 +117,19 @@ public class TestData {
         return educationToDelete;
     }
 
-    public Map<String, List<String>> getLangSkills() {
+    public Map<String, List<String>> getLanguageSkills() {
         return languageSkills;
     }
 
     public String getLanguageToDelete() {
         return languageToDelete;
+    }
+
+    public List<String> getTrainings() {
+        return trainings;
+    }
+
+    public String getTrainingToDelete() {
+        return trainingToDelete;
     }
 }

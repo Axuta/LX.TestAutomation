@@ -19,7 +19,7 @@ public class EducationSection extends MainPage {
     @FindBy(xpath = "//*[@id='education']/header/div[2]/button")
     private WebElement addEducationButton;
 
-    @FindBy(xpath = "//*[@id='education']/div//input")
+    @FindBy(xpath = "//input[contains(@placeholder, 'Degree')]")
     private List<WebElement> educationTextFields;
 
     @FindBy(xpath = "//*[@id='education']/div//button")
@@ -42,7 +42,7 @@ public class EducationSection extends MainPage {
         new WebDriverWait(driver, Duration.ofSeconds(30))
                 .until(ExpectedConditions
                         .numberOfElementsToBeMoreThan(
-                                By.xpath("//*[@id='education']/div//input"),
+                                By.xpath("//input[contains(@placeholder, 'Degree')]"),
                                 testedEducations.size() - 1));
 
         for (int i = 0; i < educationTextFields.size(); i++) {
@@ -56,8 +56,8 @@ public class EducationSection extends MainPage {
 
     public void deleteEducation(String text) {
         for (int i = 0; i < educationTextFields.size(); i++) {
-            WebElement skillField = educationTextFields.get(i);
-            if (skillField.getAttribute("value").contains(text)) {
+            WebElement eduField = educationTextFields.get(i);
+            if (eduField.getAttribute("value").contains(text)) {
                 deleteEducationButton.get(i).click();
             }
 

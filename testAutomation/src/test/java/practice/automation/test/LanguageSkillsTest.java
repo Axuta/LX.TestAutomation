@@ -10,9 +10,11 @@ import practice.automation.page.LogInPage;
 import practice.automation.service.TestDataCreator;
 import practice.automation.service.UserCreator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@Test(priority = 5)
 public class LanguageSkillsTest extends CommonConditions {
     TestData testData;
     private LanguageSkillsSection languageSkills;
@@ -30,15 +32,22 @@ public class LanguageSkillsTest extends CommonConditions {
 
     @Test(priority = 1)
     public void testFillInLanguageSkills() {
-        Map<String, List<String>> testedLangSkills = testData.getLangSkills();
+        Map<String, List<String>> testedLanguageSkills = testData.getLanguageSkills();
         languageSkills
-                .fillInLanguageSkills(testedLangSkills);
+                .fillInLanguageSkills(testedLanguageSkills);
 
-        List<String> expectedLanguages = languageSkills.getLangNames();
-        List<String> expectedLangLevels = languageSkills.getLangLevels();
+        List<List<String>> testedLanguages = new ArrayList<>(testedLanguageSkills.values());
+        testedLanguages.get(0).get(0);
 
-        Assert.assertEquals(testedLangSkills.keySet(), expectedLanguages, "Wrong list of languages.");
-        Assert.assertEquals(testedLangSkills.values(), expectedLangLevels, "Wrong list of language levels.");
+        List<String> expectedLanguages = languageSkills.getLanguageNames();
+        List<String> expectedLanguageLevels = languageSkills.getLanguageLevels();
+
+        Assert.assertEquals(testedLanguageSkills.values(),
+                expectedLanguages,
+                "Wrong list of languages.");
+        Assert.assertEquals(testedLanguageSkills.values(),
+                expectedLanguageLevels,
+                "Wrong list of language levels.");
     }
 
     @Test(priority = 2)
@@ -47,6 +56,7 @@ public class LanguageSkillsTest extends CommonConditions {
         languageSkills
                 .deleteLanguage(withText);
 
-        Assert.assertFalse(languageSkills.isLanguagePresent(withText), "Required language was not removed.");
+        Assert.assertFalse(languageSkills.isLanguagePresent(withText),
+                "Required language was not removed.");
     }
 }

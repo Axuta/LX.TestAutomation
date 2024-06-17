@@ -12,6 +12,7 @@ import practice.automation.service.UserCreator;
 
 import java.util.List;
 
+@Test(priority = 4)
 public class EducationTest extends CommonConditions {
     TestData testData;
     private EducationSection educationFields;
@@ -35,7 +36,9 @@ public class EducationTest extends CommonConditions {
 
         List<String> expectedEducations = educationFields.getEducations();
 
-        Assert.assertEquals(testedEducations.getLast(), expectedEducations.getLast(),
+        Assert.assertEquals(
+                testedEducations.getLast(),
+                expectedEducations.getLast(),
                 "Educations contains wrong text.");
 
     }
@@ -46,6 +49,8 @@ public class EducationTest extends CommonConditions {
         educationFields
                 .deleteEducation(withText);
 
-        Assert.assertFalse(educationFields.isEducationPresent(withText), "Required education was not removed.");
+        Assert.assertFalse(
+                educationFields.isEducationPresent(withText),
+                "Required education was not removed.");
     }
 }

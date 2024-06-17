@@ -24,7 +24,7 @@ public class OverviewSection extends MainPage {
     @FindBy(xpath = "//section[@id='overview']/header[2]/button")
     private WebElement addSkillButton;
 
-    @FindBy(xpath = "//input[contains(@placeholder, 'Skill')]")
+    @FindBy(xpath = "//section[@id='overview']//input[contains(@placeholder, 'Skill')]")
     private List<WebElement> skills;
 
     @FindBy(xpath = "//*[@id='overview']/div[2]//button")
@@ -62,7 +62,7 @@ public class OverviewSection extends MainPage {
 
         new WebDriverWait(driver, Duration.ofSeconds(30))
                 .until(ExpectedConditions
-                        .numberOfElementsToBeMoreThan(By.xpath("//*[@id='overview']/div[2]//input"),
+                        .numberOfElementsToBeMoreThan(By.xpath("//input[contains(@placeholder, 'Skill')]"),
                                 skillSet.size() - 1));
 
         for (int i = 0; i < skills.size(); i++) {

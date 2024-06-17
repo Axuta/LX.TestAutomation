@@ -27,11 +27,6 @@ public class DriverSingleton {
                     driver = new EdgeDriver();
                     break;
                 }
-                case "safari": {
-                    WebDriverManager.safaridriver().setup();
-                    driver = new SafariDriver();
-                    break;
-                }
                 default: {
                     WebDriverManager.chromedriver().setup();
                     driver = new ChromeDriver();

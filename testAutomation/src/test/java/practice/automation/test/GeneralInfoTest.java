@@ -3,25 +3,25 @@ package practice.automation.test;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import practice.automation.model.TestData;
 import practice.automation.model.User;
 import practice.automation.page.LogInPage;
-import practice.automation.service.TestDataCreator;
+import practice.automation.service.GeneralInfo;
 import practice.automation.service.UserCreator;
 
 import java.util.List;
 
+@Test(priority = 1)
 public class GeneralInfoTest extends CommonConditions {
 
-    TestData testData;
-    List<String> expectedResults;
+    List<String> generalInfoFields;
+    private GeneralInfo testData;
 
     @BeforeClass(alwaysRun = true)
     public void testsSetUp() {
         User testUser = UserCreator.withCredentialsFromProperty();
-        testData = TestDataCreator.forGeneralInfo();
+        testData = new GeneralInfo();
 
-        expectedResults = new LogInPage(driver)
+        generalInfoFields = new LogInPage(driver)
                 .openPage()
                 .loginValidUser(testUser)
                 .manageGeneralInfo()
@@ -30,25 +30,25 @@ public class GeneralInfoTest extends CommonConditions {
 
     @Test
     public void firstNameIsRightName() {
-        String expectedFirstName = expectedResults.get(0);
-        String testedFirstName = testData.getFirstName();
+        String expectedFirstName = testData.getFirstName();
+        String actualFirstName = generalInfoFields.get(0);
 
-        Assert.assertEquals(expectedFirstName, testedFirstName, "General info contains wrong name.");
+        Assert.assertEquals(actualFirstName, expectedFirstName, "General info contains wrong name.");
     }
 
     @Test
     public void lastNameIsRightSurname() {
-        String expectedLastName = expectedResults.get(1);
-        String testedLastName = testData.getLastName();
+        String expectedLastName = testData.getLastName();
+        String actualLastName = generalInfoFields.get(1);
 
-        Assert.assertEquals(expectedLastName, testedLastName, "General info contains wrong surname.");
+        Assert.assertEquals(actualLastName, expectedLastName, "General info contains wrong surname.");
     }
 
     @Test
     public void JobTitleIsRightTitle() {
-        String expectedJobTitle = expectedResults.get(2);
-        String testedJobTitle = testData.getJobTitle();
+        String expectedJobTitle = testData.getJobTitle();
+        String actualJobTitle = generalInfoFields.get(2);
 
-        Assert.assertEquals(expectedJobTitle, testedJobTitle, "General info contains wrong job title.");
+        Assert.assertEquals(actualJobTitle, expectedJobTitle, "General info contains wrong job title.");
     }
 }

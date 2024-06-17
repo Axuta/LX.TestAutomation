@@ -1,6 +1,7 @@
 package practice.automation.page;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -34,19 +35,40 @@ public class LanguageSkillsSection extends MainPage {
         PageFactory.initElements(driver, this);
     }
 
-    public void fillInLanguageSkills(Map<String, List<String>> langMap) {
-        for (int i = 0; i < langMap.size(); i++) {
+    public void fillInLanguageSkills(Map<String, List<String>> testedLanguageMap) {
 
+        for (List<String> languageInfo : testedLanguageMap.values()) {
             WebElement lastLanguageNameField = languageNameFields.getLast();
+            lastLanguageNameField.sendKeys(languageInfo.get(1));
+            lastLanguageNameField.sendKeys(Keys.ENTER);
 
+            WebElement lastLanguageLevelField = languageLevelFields.getLast();
+            lastLanguageLevelField.sendKeys(languageInfo.get(0));
+            lastLanguageLevelField.sendKeys(Keys.ENTER);
 
+            addLanguageButton.click();
+        }
+
+        new WebDriverWait(driver, Duration.ofSeconds(30))
+                .until(ExpectedConditions
+                        .numberOfElementsToBeMoreThan(
+                                By.xpath("//*[@id='education']/div//input"),
+                                testedLanguageMap.size() - 1));
+
+        for (int i = 0; i < languageNameFields.size(); i++) {
+            if (languageNameFields.get(i)
+                    .getAttribute("value")
+                    .isEmpty()) {
+                deleteLanguageButton.get(i).click();
+            }
         }
     }
 
+
     public void deleteLanguage(String text) {
         for (int i = 0; i < languageNameFields.size(); i++) {
-            WebElement skillField = languageNameFields.get(i);
-            if (skillField.getAttribute("value").contains(text)) {
+            WebElement languageField = languageNameFields.get(i);
+            if (languageField.getAttribute("value").contains(text)) {
                 deleteLanguageButton.get(i).click();
             }
 
@@ -58,25 +80,25 @@ public class LanguageSkillsSection extends MainPage {
         }
     }
 
-    public List<String> getLangNames() {
-        List<String> langNames = new ArrayList<>();
-        for (WebElement lang : languageNameFields) {
-            langNames.add(lang.getAttribute("value"));
+    public List<String> getLanguageNames() {
+        List<String> languageNames = new ArrayList<>();
+        for (WebElement language : languageNameFields) {
+            languageNames.add(language.getAttribute("value"));
         }
-        return langNames;
+        return languageNames;
     }
 
-    public List<String> getLangLevels() {
-        List<String> langLevels = new ArrayList<>();
+    public List<String> getLanguageLevels() {
+        List<String> languageLevels = new ArrayList<>();
         for (WebElement level : languageLevelFields) {
-            langLevels.add(level.getAttribute("value"));
+            languageLevels.add(level.getAttribute("value"));
         }
-        return langLevels;
+        return languageLevels;
     }
 
     public boolean isLanguagePresent(String keys) {
-        for (WebElement lang : languageNameFields) {
-            if (lang.getAttribute("value").equals(keys)) {
+        for (WebElement language : languageNameFields) {
+            if (language.getAttribute("value").equals(keys)) {
                 return true;
             }
         }

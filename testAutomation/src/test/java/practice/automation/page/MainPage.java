@@ -47,8 +47,22 @@ public class MainPage {
         return new PersonalStrengthsSection(driver);
     }
 
+    public HeaderSection manageHeader() {
+        return new HeaderSection(driver);
+    }
+
     public void clearInputField(WebElement field) {
         field.sendKeys(Keys.CONTROL + "a");
         field.sendKeys(Keys.DELETE);
     }
+
+
+
+//    public void bulletSection(String placeholder) {
+//        System.out.println(placeholder);
+//    }
+//
+//    public void textSection(String text) {
+//        System.out.println(text);
+//    }
 }

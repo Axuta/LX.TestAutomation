@@ -13,7 +13,7 @@ public class TestDataReader {
         for (String key : resourceBundle.keySet()) {
             if (key.startsWith(keySection)) {
                 String keyField = key.substring((keySection).length());
-                String[] parts = keyField.split("\\.",2);
+                String[] parts = keyField.split("\\.", 2);
 
                 if (parts.length == 2) {
                     String field = parts[0];
@@ -29,6 +29,4 @@ public class TestDataReader {
     public static String getTestData(String key) {
         return resourceBundle.getString(key);
     }
-
-
 }
