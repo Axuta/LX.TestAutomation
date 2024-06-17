@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Language Skills" verbose="1" >
+<test name="langSkills">
+    <classes>
+        <class name="practice.automation.test.LanguageSkillsTest"/>
+    </classes>
+</test>
+</suite>

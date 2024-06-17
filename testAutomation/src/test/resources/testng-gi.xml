@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="General-Info" verbose="1" >
+    <test name="Gen-Info">
+        <classes>
+            <class name="practice.automation.test.GeneralInfoTest"/>
+        </classes>
+    </test>
+</suite>
